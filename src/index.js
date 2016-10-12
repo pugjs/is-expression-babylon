@@ -10,34 +10,36 @@ const DEFAULT_OPTIONS = {
   throw: false
 };
 
-export default function isExpression(src, options) {
-  options = Object.assign({}, DEFAULT_OPTIONS, options);
+class ExpressionParser extends Parser {
+  constructor(options, input) {
+    super(options, input);
 
-  class ExpressionParser extends Parser {
-    constructor(options, input) {
-      super(options, input);
-
-      if (options.strict) {
-        this.state.strict = true;
-      }
+    if (options.strict) {
+      this.state.strict = true;
     }
 
-    skipLineComment(startSkip) {
-      if (options.lineComment) {
-        return super.skipLineComment(startSkip);
-      }
+    this.expressionOptions = options;
+  }
 
-      this.raise(this.state.pos, 'Line comments not allowed in an expression');
+  skipLineComment(startSkip) {
+    if (this.expressionOptions.lineComment) {
+      return super.skipLineComment(startSkip);
     }
 
-    assertExpression() {
-      this.nextToken();
-      this.parseExpression();
-      if (!this.match(tokTypes.eof)) {
-        this.unexpected();
-      }
+    this.raise(this.state.pos, 'Line comments not allowed in an expression');
+  }
+
+  assertExpression() {
+    this.nextToken();
+    this.parseExpression();
+    if (!this.match(tokTypes.eof)) {
+      this.unexpected();
     }
   }
+}
+
+export default function isExpression(src, options) {
+  options = Object.assign({}, DEFAULT_OPTIONS, options);
 
   try {
     const parser = new ExpressionParser(options, src);
