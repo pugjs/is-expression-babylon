@@ -28,7 +28,7 @@
   ],
   "scripts": {
     "prepublish": "babel -d lib src",
-    "test": "babel-node test && npm run coverage",
+    "test": "babel-node test",
     "coverage": "cross-env NODE_ENV=test nyc --reporter text-summary --reporter lcov node test"
   },
   "repository": {
