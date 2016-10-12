@@ -31,10 +31,11 @@ class ExpressionParser extends Parser {
 
   assertExpression() {
     this.nextToken();
-    this.parseExpression();
+    const expr = this.parseExpression();
     if (!this.match(tokTypes.eof)) {
       this.unexpected();
     }
+    return expr;
   }
 }
 
@@ -53,3 +54,12 @@ export default function isExpression(src, options) {
     throw err;
   }
 }
+
+function getExpression(src, options) {
+  options = Object.assign({}, DEFAULT_OPTIONS, options);
+
+  const parser = new ExpressionParser(options, src);
+  return parser.assertExpression();
+}
+
+isExpression.getExpression = getExpression;

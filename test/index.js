@@ -1,6 +1,6 @@
 import assert from 'assert';
 import testit from 'testit';
-import isExpression from '../src';
+import isExpression, {getExpression} from '../src';
 
 function passes(src, options) {
   testit(`${JSON.stringify(src)} ${JSON.stringify(options || {})}`, () => {
@@ -39,4 +39,17 @@ testit('fails', () => {
   error('function (a = "default") {"use strict";}', 1, 10);
   error('\npublic', 2, 0, {strict: true});
   error('abc // my comment', 1, 4);
+});
+
+testit('getExpression', () => {
+  testit('returns AST', () => {
+    const expr = getExpression('abc');
+    assert.equal(expr.type, 'Identifier');
+  });
+
+  testit('throws', () => {
+    assert.throws(() => {
+      getExpression('weird error');
+    });
+  });
 });

@@ -21,6 +21,10 @@ the features it implements. Pick your poison.
 
 ## Usage
 
+```js
+const isExpression = require('is-expression-babylon');
+```
+
 ### `isExpression(src[, options])`
 
 Validates a string as a JavaScript expression.
@@ -41,32 +45,52 @@ Validates a string as a JavaScript expression.
 
 See the examples below for usage.
 
+### `isExpression.getExpression(src[, options])`
+
+Get the Babylon Expression AST node of a string.
+
+`src` contains the source.
+
+`options` can contain any Babylon options, or any of the following:
+
+- `strict`: Use strict mode when trying to parse the string. Defaults to
+  `false`. Even if this option is `false`, if you have provided
+  `options.sourceType === 'module'` which imples strict mode under ES2015,
+  strict mode will be used.
+- `lineComment`: When `true`, allows line comments in the expression.
+  Defaults to `false` for safety.
+
+If the string is not an expression, an error is thrown.
+
 ## Examples
 
 ```js
-var isExpression = require('is-expression-babylon')
+const isExpression = require('is-expression-babylon');
 
-isExpression('myVar')
+isExpression('myVar');
 //=> true
-isExpression('var')
+isExpression('var');
 //=> false
-isExpression('["an", "array", "\'s"].indexOf("index")')
+isExpression('["an", "array", "\'s"].indexOf("index")');
 //=> true
 
-isExpression('var', {throw: true})
+isExpression('var', {throw: true});
 // SyntaxError: Unexpected token (1:0)
 //     at Parser.pp.raise (acorn/dist/acorn.js:940:13)
 //     at ...
 
-isExpression('public')
+isExpression('public');
 //=> true
-isExpression('public', {strict: true})
+isExpression('public', {strict: true});
 //=> false
 
-isExpression('abc // my comment')
+isExpression('abc // my comment');
 //=> false
-isExpression('abc // my comment', {lineComment: true})
+isExpression('abc // my comment', {lineComment: true});
 //=> true
+
+const expression = isExpression.getExpression('abc');
+//=> Node { type: 'Identifier', ... }
 ```
 
 ## License
