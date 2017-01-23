@@ -1,3 +1,10 @@
+<h1 id=deprecated align=center>!!!DEPRECATED!!!</h1>
+
+This module has stopped working since babylon@6.13.1. Please use Babylon's
+`babylon.parseExpression()` instead.
+
+----
+
 # is-expression-babylon
 
 Validates a string as a JavaScript expression using Babylon
