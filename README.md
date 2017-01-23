@@ -1,7 +1,8 @@
-<h1 id=deprecated align=center>!!!DEPRECATED!!!</h1>
+<h1 align=center>!!!DEPRECATED!!!</h1>
 
-This module has stopped working since babylon@6.13.1. Please use Babylon's
-`babylon.parseExpression()` instead.
+This module has stopped working since
+[babylon@6.13.1](https://github.com/babel/babylon/commit/beb8db62646081a88b8db31fe95d4b37aa28d98f).
+Please use Babylon's `babylon.parseExpression()` instead.
 
 ----
 
